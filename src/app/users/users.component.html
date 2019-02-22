@@ -1,0 +1,140 @@
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-header" data-background-color="#50a3a2">
+                        <h4 class="title">Registered Users</h4>
+                        <p class="category">Secure Tim user control</p>
+                    </div>
+                    <div class="card-content table-responsive">
+                        <table class="table">
+                            <thead class="text-danger">
+                            <tr>
+                                <th>User-name</th>
+                                <th>Full names</th>
+                                <th>Status</th>
+                                <th>Last-login</th>
+                                <th></th>
+                                <th>Action</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr *ngFor="let user of users">
+                                <td>{{user.username}}</td>
+                                <td>{{user.first_name}} {{user.last_name}}</td>
+                                <td>{{user.status}}</td>
+                                <td>{{user.last_login}}</td>
+                                <td><button type="button" class="btn btn-sm btn-success" (click)="edit(user)"><i class="fa fa-edit"></i></button></td>
+                                <td *ngIf="user.status === 'active'">
+                                    <button type="button" class="btn btn-sm btn-danger" style="background-color: #f44336 !important;" (click)="deactivate(user)">Deactivate</button>
+                                </td>
+                                <td *ngIf="user.status !== 'active'">
+                                    <button type="button" class="btn btn-sm btn-info" style="background-color: #03a9f4 !important;" (click)="activate(user)">Activate</button>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-header" data-background-color="#50a3a2">
+                        <h4 class="title">Register User</h4>
+                        <p class="category">Add new user from here</p>
+                    </div>
+                    <div class="card-content">
+
+                        <form [formGroup]="formdata" (submit)="createNewUser()">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group form-black label-floating is-empty">
+                                        <label class="control-label">First Name</label>
+                                        <input type="text" [(ngModel)]="userEdit.first_name" class="form-control" name="firstName" formControlName="firstName">
+                                        <div *ngIf="first.invalid && (first.dirty || first.touched)" class="text-danger">
+                                            <div *ngIf="first.errors.required"> First Name Required</div>
+                                            <div *ngIf="first.errors.minlength">Minimum Length is 2 characters </div>
+                                            <div *ngIf="first.errors.pattern">Only Alphabetic Characters Allowed</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group form-black label-floating is-empty">
+                                        <label class="control-label">Last Name</label>
+                                        <input type="text" [(ngModel)]="userEdit.last_name" class="form-control" name="lastName" formControlName="lastName">
+                                        <div *ngIf="last.invalid && (last.dirty || last.touched)" class="text-danger">
+                                            <div *ngIf="last.errors.required"> Last Name Required</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group form-black label-floating is-empty">
+                                        <label class="control-label">User-name (Preferred name)</label>
+                                        <input type="text" [(ngModel)]="userEdit.username" class="form-control" name="userName" formControlName="userName" >
+                                        <div *ngIf="uName.invalid && (user.dirty || user.touched)" class="text-danger">
+                                            <div *ngIf="uName.errors.required"> User Name Required</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group form-black label-floating is-empty">
+                                        <label class="control-label">Email address</label>
+                                        <input type="email" [(ngModel)]="userEdit.email" class="form-control" name="email" formControlName="email" >
+                                        <div *ngIf="email_.invalid && (email_.dirty || email_.touched)" class="text-danger">
+                                            <div *ngIf="email_.errors.required">Email Required</div>
+                                            <div *ngIf="email_.errors.pattern">Email : xxx@xxx.xxx</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group form-black label-floating is-empty">
+                                        <label class="control-label">Password</label>
+                                        <input type="password" [(ngModel)]="userEdit.password" class="form-control" name="password" formControlName="password" >
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group form-black label-floating is-empty">
+                                        <label class="control-label">Repeat password</label>
+                                        <input type="password" [(ngModel)]="userEdit.verifyPassword" class="form-control" name="verify" formControlName="verify" >
+                                    </div>
+                                    <div class="text-danger" *ngIf="passwordError">
+                                        {{ passwordError }}
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <p style="color: #03a9f4" *ngIf="loading" class="pull-left">
+                                        <img style="max-width: 40px; max-height: 40px" width="50px" height="50px" src="assets/img/loaders/default.gif" />
+                                        <br>
+                                        Loading... Please wait
+                                    </p>
+                                </div>
+                                <div class="col-md-4">
+                                    <button type="submit" [disabled]="loading" class="btn btn-sm pull-right" >Register User</button>
+                                </div>
+                            </div>
+
+                            <p class="text-danger" *ngIf="submitted && !formdata.valid">Invalid data submitted</p>
+
+                            <app-alert></app-alert>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

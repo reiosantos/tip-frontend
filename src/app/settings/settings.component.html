@@ -1,0 +1,43 @@
+
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="card">
+            <div class="card-header" data-background-color="#50a3a2">
+                <span class="pull-right">
+                    <i class="fa fa-gears" style="color: #fff; font-weight: bolder;"></i>
+                </span>
+                <h4 class="title">Settings</h4>
+            </div>
+            <div class="card-content">
+                <div class="row">
+                    <div class="col-md-12 col-lg-12 col-sm-12">
+                        <h5>Modify System Settings
+                            <button type="button" *ngIf="shouldDisable" (click)="shouldDisable = false" class="btn btn-sm btn-danger pull-right" >Edit</button>
+                        </h5>
+
+                        <app-alert></app-alert>
+
+                        <form class="form form-info" (submit)="saveSettings($event)" novalidate>
+                            <div class="row" *ngFor="let setting of settings; odd as isOdd" >
+
+                                <div class="col-md-12">
+
+                                    <div *ngIf="isBoolean(setting[setting._id])" class="form-group label-floating">
+                                        <input [disabled]="shouldDisable" type="checkbox" class="form-control checkbox checkbox-material" [(ngModel)]="formSettings[setting._id]" name="{{setting._id}}" >
+                                        <label class="control-label text-primary" style="color: #20c1c8">{{ setting._id }}</label>
+                                    </div>
+
+                                    <div *ngIf="!isBoolean(setting[setting._id])" class="form-group label-floating">
+                                        <label class="control-label text-primary" style="color: #20c1c8">{{ setting._id }}</label>
+                                        <input [disabled]="shouldDisable" type="number" class="form-control" [(ngModel)]="formSettings[setting._id]" name="{{setting._id}}" >
+                                    </div>
+                                </div>
+                            </div>
+                            <button type="submit" *ngIf="!shouldDisable" class="btn pull-right" >Save Settings</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

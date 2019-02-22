@@ -1,0 +1,123 @@
+<!-- Modal -->
+<div class="modal fade " id="renewalStep1" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <!--Step1-->
+    <div class="modal-content " *ngIf="!rightEmail" style=" background-color: rgba(0,0,0,0.7); height: 30em;">
+      <div class="modal-header" style="border-bottom: 2px">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h2 class="modal-title" id="exampleModalLongTitle">Step 1</h2>
+        <p class="category">Please submit the email you registered with us</p>
+      </div>
+      <hr style="color: floralwhite"/>
+      <div class="modal-body" *ngIf="!rightEmail">
+        <form [formGroup]="formData" (submit)="nextStep()">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="form-group form-black label-floating is-empty">
+                <label class="control-label">Email address</label>
+                <input type="email" class="form-control" name="email" formControlName="email">
+                <div *ngIf="email_.invalid && (email_.dirty || email_.touched)" class="text-danger">
+                  <div *ngIf="email_.errors.required">Email Required</div>
+                  <div *ngIf="email_.errors.pattern">Email : xxx@xxx.xxx</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <button type="submit" class="btn pull-right" data-toggle="modal" data-target="#renewalStep2" [disabled]="!formData.valid" >Next</button>
+        </form>
+      </div>
+    </div>
+    <!-- Step 2 -->
+    <div class="modal-content " *ngIf="rightEmail" style=" background-color: rgba(0,0,0,0.7); height: 45em; overflow: auto">
+      <div class="modal-header" style="border-bottom: 2px">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h2 class="modal-title" id="exampleModalLongTitle1">Step 2</h2>
+        <p class="category">Please Confirm Your Password and Finish</p>
+      </div>
+      <hr style="color: floralwhite"/>
+      <div class="modal-body" style="height: 30em; overflow: auto">
+        <form [formGroup]="passwordForm" (submit)="lastStep()" *ngIf="!newPassword" >
+          <div class="row">
+            <div class="col-md-12">
+              <div class="form-group form-black label-floating is-empty">
+                <label class="control-label">Token</label>
+                <input type="text" class="form-control" name="token" formControlName="token">
+                <div *ngIf="token_.invalid && (token_.dirty || token_.touched)" class="text-danger">
+                  <div *ngIf="token_.errors.required">Token Required</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="form-group form-black label-floating is-empty">
+                <label class="control-label">New Password</label>
+                <input type="password" class="form-control" name="password" formControlName="password">
+                <div *ngIf="password_.invalid && (password_.dirty || password_.touched)" class="text-danger">
+                  <div *ngIf="password_.errors.required">Email Required</div>
+                  <div *ngIf="password_.errors.pattern">Only Numeric And Alphabetic Characters</div>
+                  <div *ngIf="password_.errors.minlength">Minimum is 6 characters</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="form-group form-black label-floating is-empty">
+                <label class="control-label">Repeat Password</label>
+                <input type="password" class="form-control" name="verify" formControlName="verify">
+              </div>
+            </div>
+          </div>
+          <button type="submit" class="btn pull-right" >Finish</button>
+        </form>
+        <div class="form-group center-block" *ngIf="newPassword">
+          <h1 class="title " style="align-content: center">Congratulations</h1>
+          <h4 class="sub-title ">You Have Successfully Changed Your Password</h4>
+        </div>
+      </div>
+
+      <div class="modal-footer navbar-fixed-bottom" >
+        <hr style="color: floralwhite"/>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!--Login form-->
+<div class="wrapper">
+  <div class="container">
+    <h1>Threat Intelligence Platform</h1>
+    <form [formGroup]="loginForm" role="form" (submit)="onLogin()" method="post" novalidate >
+      <input type="text" class="form-input" placeholder="Username" [(ngModel)]="userLogin.username" formControlName="username">
+      <div class="text-danger" *ngIf="submitted && !loginForm.controls.username.valid">Username is Required</div>
+
+      <input type="password" class="form-input" placeholder="password" [(ngModel)]="userLogin.password" formControlName="password">
+      <div class="text-danger" *ngIf="submitted && !loginForm.controls.password.valid">Password is required</div>
+
+      <button type="submit" [disabled]="loading ||!loginForm.valid " id="login-button">Login</button>
+      <img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
+      <div class="form-group " ><p data-toggle="modal" data-target="#renewalStep1">Forgot password?</p></div>
+      <p style="text-align: center; width: 100%"><app-alert></app-alert></p>
+    </form>
+  </div>
+  <ul class="bg-bubbles">
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+  </ul>
+</div>
+

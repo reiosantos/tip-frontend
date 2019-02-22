@@ -1,0 +1,28 @@
+.card-header {
+    background: #50a3a2;
+    background: -webkit-gradient(linear, left top, right bottom, from(#50a3a2), to(#53e3a6));
+    background: linear-gradient(to bottom right, #50a3a2 0%, #53e3a6 100%);
+}
+div .col-md-6 {
+    height: 65em;
+    overflow: auto;
+}
+div .modal-dialog {
+    width: 60%;
+    color: #80cbc4;
+
+}
+div .form-group:hover {
+    font-size: 18px;
+    color: floralwhite;
+}
+a:hover {
+    cursor: pointer;
+}
+div .modal-body {
+    overflow: auto;
+}
+#feeds .glyphicon { margin-right:10px; }
+div .alert-default:hover {
+    cursor: pointer;
+}

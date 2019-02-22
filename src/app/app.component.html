@@ -1,0 +1,15 @@
+<!--<app-login [style.display]="(user && isLoggedin) ? 'none' : 'block'" (loginEmitter)="loginEmit($event)"></app-login>-->
+<app-login *ngIf="!user && !isLoggedin" (loginEmitter)="loginEmit($event)"></app-login>
+<div class="wrapper" [style.display]="(user && isLoggedin) ? 'block' : 'none'" >
+    <div class="sidebar" data-color='green' data-image="">
+        <app-sidebar></app-sidebar>
+        <div class="sidebar-background" style="background-image: url(../assets/img/sidebar-4.jpg)"></div>
+    </div>
+    <div class="main-panel">
+        <app-navbar></app-navbar>
+        <router-outlet></router-outlet>
+        <div>
+            <app-footer></app-footer>
+        </div>
+    </div>
+</div>

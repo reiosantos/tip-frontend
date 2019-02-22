@@ -1,0 +1,13 @@
+.card-header {
+    background: #50a3a2;
+    background: -webkit-gradient(linear, left top, right bottom, from(#50a3a2), to(#53e3a6));
+    background: linear-gradient(to bottom right, #50a3a2 0%, #53e3a6 100%);
+}
+button {
+    background: #50a3a2;
+    background: -webkit-gradient(linear, left top, right bottom, from(#50a3a2), to(#53e3a6));
+    background: linear-gradient(to bottom right, #50a3a2 0%, #53e3a6 100%);
+}
+/*.main-content {
+    margin-left: 10em;
+}*/

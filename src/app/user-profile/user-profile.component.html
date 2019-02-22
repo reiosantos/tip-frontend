@@ -1,0 +1,119 @@
+<div class="main-content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-8">
+        <div class="card">
+          <div class="card-header">
+            <h4 class="title">User Profile</h4>
+            <p class="category">Updated user profile</p>
+          </div>
+          <div class="card-content" style="background-color: beige">
+            <div class="form-group">
+              <div class="row">
+                <div class="col-md-6">
+                  <p class="text-danger">First Name</p>
+                </div>
+                <div class="col-md-6">
+                  <p class="text-gray" style="color: black;">{{user.first_name}}</p>
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="row">
+                <div class="col-md-6">
+                  <p class="text-danger">Last Name</p>
+                </div>
+                <div class="col-md-6">
+                  <p class="text-gray" style="color: black;">{{user.last_name}}</p>
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="row">
+                <div class="col-md-6">
+                  <p class="text-danger">User Name</p>
+                </div>
+                <div class="col-md-6">
+                  <p class="text-gray" style="color: black;">{{user.username}}</p>
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="row">
+                <div class="col-md-6">
+                  <p class="text-danger">Email Address</p>
+                </div>
+                <div class="col-md-6">
+                  <p class="text-gray" style="color: black;">{{user.email}}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card">
+          <div class="card-header">
+            <h4 class="title">Change Password</h4>
+            <p class="category">Make changes to your current password</p>
+          </div>
+          <div class="card-content" style="background-color: beige">
+            <form>
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="form-group form-black label-floating is-empty">
+                    <label class="control-label">Current Password</label>
+                    <input type="password"  class="form-control" name="currentPassword" formControlName="currentPassword">
+                    <!--<div *ngIf="first.invalid && (first.dirty || first.touched)" class="text-danger">
+                      <div *ngIf="first.errors.required"> First Name Required</div>
+                      <div *ngIf="first.errors.minlength">Minimum Length is 2 characters </div>
+                      <div *ngIf="first.errors.pattern">Only Alphabetic Characters Allowed</div>
+                    </div>-->
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="form-group form-black label-floating is-empty">
+                    <label class="control-label">New Password</label>
+                    <input type="password"  class="form-control" name="newPassword" formControlName="newPassword">
+                    <!--<div *ngIf="first.invalid && (first.dirty || first.touched)" class="text-danger">
+                      <div *ngIf="first.errors.required"> First Name Required</div>
+                      <div *ngIf="first.errors.minlength">Minimum Length is 2 characters </div>
+                      <div *ngIf="first.errors.pattern">Only Alphabetic Characters Allowed</div>
+                    </div>-->
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="form-group form-black label-floating is-empty">
+                    <label class="control-label">Confirm Password</label>
+                    <input type="password"  class="form-control" name="confirmPassword" formControlName="confirmPassword">
+                    <!--<div *ngIf="first.invalid && (first.dirty || first.touched)" class="text-danger">
+                      <div *ngIf="first.errors.required"> First Name Required</div>
+                      <div *ngIf="first.errors.minlength">Minimum Length is 2 characters </div>
+                      <div *ngIf="first.errors.pattern">Only Alphabetic Characters Allowed</div>
+                    </div>-->
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-8">
+                  <p style="color: #03a9f4" *ngIf="loading" class="pull-left">
+                    <img style="max-width: 40px; max-height: 40px" width="50px" height="50px" src="assets/img/loaders/default.gif" />
+                    <br>
+                    Loading... Please wait
+                  </p>
+                </div>
+                <div class="col-md-4">
+                  <button type="submit" [disabled]="loading" class="btn btn-sm pull-right" >Confirm Changes</button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

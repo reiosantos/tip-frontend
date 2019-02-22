@@ -1,0 +1,285 @@
+<!-- Modal -->
+<div class="modal fade " id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content " style=" background-color: rgba(0,0,0,0.7); height: 45em;">
+            <div class="modal-header" style="border-bottom: 2px">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h2 class="modal-title" id="exampleModalLongTitle">{{ipData.source_as_name}}</h2>
+                <h6 class="modal-title">{{ipData.source_ip}}</h6>
+            </div>
+            <hr style="color: floralwhite"/>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-4 col-sm-2">
+                        <div class="form-group">
+                            Source-IP : {{ipData.source_ip}}
+                        </div>
+                        <div class="form-group">
+                            Source-Network : {{ipData.source_network}}
+                        </div>
+                        <div class="form-group">
+                            Attempts : {{ipData.attempts}}
+                        </div>
+                        <div class="form-group">
+                            Block-date : {{ipData.block_date}}
+                        </div>
+                        <div class="form-group">
+                            Unblock-date : {{ipData.unblock_date}}
+                        </div>
+                        <div class="form-group">
+                            Classification Taxonomy : {{ipData.classification_taxonomy}}
+                        </div>
+                        <div class="form-group">
+                            Classification Type : {{ipData.classification_type}}
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-sm-2">
+                        <div class="form-group">
+                            Confidence Level : {{ipData.confidence_level}}
+                        </div>
+                        <div class="form-group">
+                            Event Description : {{ipData.event_description_text}}
+                        </div>
+                        <div class="form-group">
+                            Feed Accuracy : {{ipData.feed_accuracy}}
+                        </div>
+                        <div class="form-group">
+                            Overall Attempts : {{ipData.overall_attempts}}
+                        </div>
+                        <div class="form-group">
+                            Source Contact : {{ipData.source_contact}}
+                        </div>
+                        <div class="form-group">
+                            Source Name : {{ipData.source_as_name}}
+                        </div>
+                        <div class="form-group">
+                            asn : {{ipData.source_asn}}
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-sm-2">
+                        <div class="form-group">
+                            fqdn : {{ipData.source_fqdn}}
+                        </div>
+                        <div class="form-group">
+                            Geo-Location : {{ipData.source_geolocation_cc}}
+                        </div>
+                        <div class="form-group">
+                            Registry : {{ipData.registry}}
+                        </div>
+                        <div class="form-group">
+                            URL : {{ipData.feed_url}}
+                        </div>
+                        <div class="form-group">
+                            Observation Time : {{ipData.time_observation}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-footer navbar-fixed-bottom" >
+                <hr style="color: floralwhite"/>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="main-content">
+    <!--<button onclick="scrollToTop()" class="scroll-to-top" id="myBtn" [ngClass]="{'show-scroll': navIsFixed}"><i class="fa fa-angle-double-up"></i></button>-->
+    <div class="container-fluid">
+        <!-- Categorized by Valid ip-->
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header" data-background-color="#50a3a2">
+                        <h4 class="title">Blocked  Resources</h4>
+                        <p class="category">Categorized by valid ip</p>
+                    </div>
+                    <div class="card-content" >
+                        <div class="panel-group" id="accordion" *ngFor="let blocked of blockedResources">
+                            <div class="panel panel-default" >
+                                <div class="panel-heading">
+                                    <h4 class="panel-title">
+                                        <a data-toggle="collapse" data-parent="#accordion" href="#{{blocked}}">
+                                            <i class="fa fa-list-ul"></i>{{ reformatAddress(blocked) }}
+                                        </a>
+                                        <a class="pull-right" (click)="unBlockNetwork($event, reformatAddress(blocked))">Unblock <i class="fa fa-unlock"></i> </a>
+                                    </h4>
+                                </div>
+                                <div id="{{blocked}}" class="panel-collapse collapse in">
+                                    <ul class="list-group">
+                                        <li class="list-group-item" *ngFor="let ipAdressBlocked of blockedResources1[blocked]">
+                                            <i class="fa fa-wifi" style="font-size: 14px; color: #5c6bc0"></i>
+                                            <!--<i class="material-icons" style="font-size: 14px; color: #5c6bc0">settings_input_antenna</i>-->
+                                            <!--<a routerLink="/ipAddressData/{{ipAdress}}">{{ipAdress}}</a>-->
+                                            <a data-toggle="modal"  (click)="ipAddressData(ipAdressBlocked)" data-target="#exampleModalCenter"> {{ipAdressBlocked.source_ip}}<br>{{ipAdressBlocked.source_as_name}}</a>
+                                            <a class="pull-right" (click)="unBlockIP($event, ipAdressBlocked)">Unblock <i class="fa fa-unlock" style="font-size: 16px; color: #7e57c2"></i> </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header" data-background-color="#50a3a2">
+                        <h4 class="title">Warning Resources</h4>
+                        <p class="category">Categorized by valid ip</p>
+                    </div>
+                    <div class="card-content" >
+                        <div class="panel-group" id="accordion1" *ngFor="let warning of warningResources">
+                            <div class="panel panel-default" >
+                                <div class="panel-heading">
+                                    <h4 class="panel-title">
+                                        <a data-toggle="collapse" data-parent="#accordion" href="#{{warning}}">
+                                            <i class="fa fa-list-ul"></i> {{ reformatAddress(warning) }}
+                                        </a>
+                                        <a class="pull-right" href="#" style="color: #b71c1c" (click)="blockNetwork($event, reformatAddress(warning))">Block <i class="fa fa-lock" style="color: #b71c1c"></i></a>
+                                    </h4>
+                                </div>
+                                <div id="{{warning}}" class="panel-collapse collapse in">
+                                    <ul class="list-group">
+                                        <li class="list-group-item" *ngFor="let ipAdressWarning of warningResources1[warning]">
+                                            <!--<i class="material-icons" style="font-size: 14px; color: #5c6bc0">settings_input_antenna</i>-->
+                                            <i class="fa fa-wifi" style="font-size: 14px; color: #5c6bc0"></i>
+                                            <a href="#" (click)="ipAddressData(ipAdressWarning)" data-toggle="modal" data-target="#exampleModalCenter" >{{ipAdressWarning.source_ip}} <br> {{ipAdressWarning.source_as_name}}</a>
+                                            <a class="pull-right" href="#" (click)="blockIp($event, ipAdressWarning)" style="color: #b71c1c">Block <i class="fa fa-lock" style="font-size: 16px; color: #b71c1c"></i> </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Categorized by Networks-->
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header" data-background-color="#50a3a2">
+                        <h4 class="title">Blocked  Resources</h4>
+                        <p class="category">Categorized by valid Networks</p>
+                    </div>
+                    <div class="card-content" >
+                        <div class="panel-group" id="accordion2" *ngFor="let blockedNetwork of blockedNetworkResources">
+                            <div class="panel panel-default" >
+                                <div class="panel-heading">
+                                    <h4 class="panel-title">
+                                        <a data-toggle="collapse" data-parent="#accordion2" href="#{{blockedNetwork}}">
+                                            <i class="fa fa-list-ul"></i>{{ reformatAddress(blockedNetwork) }}
+                                        </a>
+                                        <a class="pull-right" (click)="unBlockNetwork($event, reformatAddress(blockedNetwork))">Unblock <i class="fa fa-unlock"></i> </a>
+                                    </h4>
+                                </div>
+                                <div id="{{blockedNetwork}}" class="panel-collapse collapse in">
+                                    <ul class="list-group">
+                                        <li class="list-group-item" *ngFor="let ipAdressBlocked of blockedNetworkResources1[blockedNetwork]">
+                                            <!--<i class="fa fa-wifi" style="font-size: 14px; color: #5c6bc0"></i>-->
+                                            <i class="fa fa-wifi" style="font-size: 14px; color: #5c6bc0"></i>
+                                            <!--<a routerLink="/ipAddressData/{{ipAdress}}">{{ipAdress}}</a>-->
+                                            <a data-toggle="modal"  (click)="ipAddressData(ipAdressBlocked)" data-target="#exampleModalCenter"> {{ipAdressBlocked.source_ip}}<br>{{ipAdressBlocked.source_as_name}}</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header" data-background-color="#50a3a2">
+                        <h4 class="title">Warning Resources</h4>
+                        <p class="category">Categorized by valid Networks</p>
+                    </div>
+                    <div class="card-content" >
+                        <div class="panel-group" id="accordion3" *ngFor="let warningNetwork of warningNetworkResources">
+                            <div class="panel panel-default" >
+                                <div class="panel-heading">
+                                    <h4 class="panel-title">
+                                        <a data-toggle="collapse" data-parent="#accordion3" href="#{{warningNetwork}}">
+                                            <i class="fa fa-list-ul"></i> {{ reformatAddress(warningNetwork) }}
+                                        </a>
+                                        <a class="pull-right" href="#" style="color: #b71c1c" (click)="blockNetwork($event, reformatAddress(warningNetwork))">Block <i class="fa fa-lock" style="color: #b71c1c"></i></a>
+                                    </h4>
+                                </div>
+                                <div id="{{warningNetwork}}" class="panel-collapse collapse in">
+                                    <ul class="list-group">
+                                        <li class="list-group-item" *ngFor="let ipAdressWarning of warningNetworkResources1[warningNetwork]">
+                                            <i class="fa fa-wifi" style="font-size: 14px; color: #5c6bc0"></i>
+                                            <a href="#" (click)="ipAddressData(ipAdressWarning)" data-toggle="modal" data-target="#exampleModalCenter" >{{ipAdressWarning.source_ip}} <br> {{ipAdressWarning.source_as_name}}</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Blacklisted and white listed -->
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header" data-background-color="#50a3a2">
+                        <h4 class="title">Redirected Domains</h4>
+                        <p class="category">Redirected Malicious Domains</p>
+                    </div>
+                    <div class="card-content" >
+                        <div class="panel-group" *ngFor="let redirectedDomain of redirectedDomains">
+                            <div class="panel panel-default" >
+                                <div class="panel-heading">
+                                    <h4 class="panel-title">
+                                        <a>
+                                            <i class="fa fa-list-ul"></i>{{ redirectedDomain.domain }}
+                                        </a>
+                                        <a class="pull-right" (click)="whiteList($event, redirectedDomain.domain)">WhiteList <i class="fa fa-unlock"></i> </a>
+                                    </h4>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header" data-background-color="#50a3a2">
+                        <h4 class="title">Warning Domains</h4>
+                        <p class="category">Domains that are closely monitored</p>
+                    </div>
+                    <div class="card-content" >
+                        <div class="panel-group" *ngFor="let whiteListedDomain of whiteListedDomains">
+                            <div class="panel panel-default" >
+                                <div class="panel-heading">
+                                    <h4 class="panel-title">
+                                        <i class="fa fa-list-ul"></i> {{ whiteListedDomain.domain }}
+                                        <a class="pull-right" href="#" style="color: #b71c1c" (click)="blackListDomain($event, whiteListedDomain.domain)">Blacklist<i class="fa fa-lock" style="color: #b71c1c"></i></a>
+                                    </h4>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--Scroll to top-->
+    <button [ngClass]="{'show-scroll': navIsFixed}" (click)="scrollToTop()" class="scroll-to-top">
+        Scroll To Top
+    </button>
+</div>
+
+<div *ngIf="loading" class="display">
+    <div  class="loader">
+        <svg class="circular" viewBox="25 25 50 50">
+            <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10"/>
+        </svg>
+    </div>
+</div>

@@ -1,0 +1,97 @@
+<!-- Modal -->
+<div class="modal fade " id="feed-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content " style=" background-color: rgba(0,0,0,0.7); height: 45em;">
+            <div class="modal-header" style="border-bottom: 2px">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h2 class="modal-title" id="exampleModalLongTitle">{{modalFeed.classification_type}}</h2>
+                <h6 class="modal-title">{{modalFeed.event_description_text}}</h6>
+            </div>
+            <hr style="color: floralwhite"/>
+            <div class="modal-body" >
+                <div class="row">
+                    <div class="col-md-5 col-sm-2">
+                        <div class="form-group">
+                            Source Name : {{modalFeed.source_as_name}}
+                        </div>
+                        <div class="form-group">
+                            asn : {{modalFeed.source_asn}}
+                        </div>
+                        <div class="form-group">
+                            Source-IP : {{modalFeed.source_ip}}
+                        </div>
+                        <div class="form-group">
+                            Source-Network : {{modalFeed.source_network}}
+                        </div>
+                        <div class="form-group">
+                            Source URL : {{modalFeed.source_url}}
+                        </div>
+                        <div class="form-group">
+                            Domain Name : {{modalFeed.source_fqdn}}
+                        </div>
+                    </div>
+                    <div class="col-md-5 col-sm-2">
+                        <div class="form-group">
+                            Location : {{modalFeed.source_geolocation_cc}}
+                        </div>
+                        <div class="form-group">
+                            Event Description : {{modalFeed.event_description_text}}
+                        </div>
+                        <div class="form-group">
+                            Feed Accuracy : {{modalFeed.feed_accuracy}}
+                        </div>
+                        <div class="form-group">
+                            Type : {{modalFeed.classification_type}}
+                        </div>
+                        <div class="form-group">
+                            Taxonomy : {{modalFeed.classification_taxonomy}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-footer navbar-fixed-bottom" >
+                <hr style="color: floralwhite"/>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="card">
+            <div class="card-header" data-background-color="red">
+                <span class="pull-right">
+                    <p style="color: floralwhite">Global Notifications : {{gFeeds.length}}</p>
+                    <p style="color: floralwhite">Local Notifications : {{lFeeds.length}}</p>
+                </span>
+                <h4 class="title">Notifications</h4>
+                <p class="category">Incoming notification from Local and Global Networks</p>
+            </div>
+            <div class="card-content">
+                <div class="row">
+                    <div class="col-md-6" style="background-color: beige">
+                        <h5>Global Network Notifications</h5>
+                        <div *ngFor="let feed of gFeeds" data-toggle="modal" data-target="#feed-modal" style="background-color: #f5f7f9"
+                             (click)="displayInfo(feed)" class="alert alert-default" >
+                            <span class="title">{{feed.source_as_name}}</span>
+                            <span class="category">{{feed.source_ip}}</span>
+                            <span class="category">{{feed.source_network}}</span>
+                        </div>
+                    </div>
+                    <div class="col-md-6" style="background-color: beige">
+                        <h5>Local Network Notification</h5>
+                        <div *ngFor="let feed of lFeeds" data-toggle="modal" data-target="#feed-modal" style="background-color: #f5f7f9"
+                             (click)="displayInfo(feed)" class="alert alert-default">
+                            <span class="title">{{feed.source_as_name}}</span>
+                            <span class="category">{{feed.source_ip}}</span>
+                            <span class="category">{{feed.source_network}}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
